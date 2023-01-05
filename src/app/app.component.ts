@@ -29,21 +29,35 @@ export class AppComponent {
       return 0.5 - Math.random();
     });
   }
-  onDropped(e: CdkDragDrop<any>) {}
-  dragEntered(event: CdkDragEnter<number>) {
-    const drag = event.item;
-    const dropList = event.container;
-    const dragIndex = drag.data;
-    const dropIndex = dropList.data;
-
-    const phContainer = dropList.element.nativeElement;
-    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
-    phContainer.removeChild(phElement);
-    phContainer.parentElement.insertBefore(phElement, phContainer);
-
-    moveItemInArray(this.items, dragIndex, dropIndex);
+  onDropped(e: CdkDragDrop<any>) {
+    const dragItem = e.item;
+    const dragItemSourceDropList = e.item.dropContainer;
+    const dragIndex = e.item.data;
+    const dropItem = e.container.getSortedItems()[0];
+    const dropList = e.container;
+    const dropIndex = e.container.data;
+    this.items = this.swapItemsInArray(
+      this.items,
+      dragItemSourceDropList.data,
+      dropList.data
+    );
   }
-  swapItemsInArrat(arr, firstItem, secondItem): any[] {
+  dragEntered(e: CdkDragEnter<number>) {
+    const dragItem = e.item;
+    const dragItemSourceDropList = e.item.dropContainer;
+    const dragIndex = e.item.data;
+    const dropItem = e.container.getSortedItems()[0];
+    const dropList = e.container;
+    const dropIndex = e.container.data;
+
+    const dropListElement = dropList.element.nativeElement;
+    const dropItemElement = dropItem.element.nativeElement;
+    const dragItemSourceDropListElement =
+      dragItemSourceDropList.element.nativeElement;
+    dropListElement.removeChild(dropItemElement);
+    dragItemSourceDropListElement.appendChild(dropItemElement);
+  }
+  swapItemsInArray(arr, firstItem, secondItem): any[] {
     const firstIndex = arr.findIndex((a) => a === firstItem);
     const secondIndex = arr.findIndex((a) => a === secondItem);
     const first = arr[firstIndex];

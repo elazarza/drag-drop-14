@@ -15,7 +15,7 @@
         ngxMasonryItem
         class="list list-wide grid-item grid-item--fullwidth"
         cdkDropList
-        [cdkDropListData]="i"
+        [cdkDropListData]="item"
       >
         <div
           cdkDrag
@@ -31,12 +31,13 @@
           ngxMasonryItem
           class="list list grid-item"
           cdkDropList
-          [cdkDropListData]="i"
+          [cdkDropListData]="item"
         >
           <div
             cdkDrag
-            [cdkDragData]="i"
+            [cdkDragData]="item"
             (cdkDragEntered)="dragEntered($event)"
+            (cdkDragDropped)="onDropped($event)"
             class="example-box"
           >
             {{ item }}
