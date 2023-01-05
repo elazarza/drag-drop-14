@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { CdkDragEnter, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragEnter,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'my-app',
@@ -7,8 +11,15 @@ import { CdkDragEnter, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public items: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
+  public items: Array<any> = ['1', 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  masonryOptions = {
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true,
+    horizontalOrder: true,
+    transitionDuration: '0.8s',
+    stagger: 500,
+  };
   add() {
     this.items.push(this.items.length + 1);
   }
@@ -18,7 +29,7 @@ export class AppComponent {
       return 0.5 - Math.random();
     });
   }
-
+  onDropped(e: CdkDragDrop<any>) {}
   dragEntered(event: CdkDragEnter<number>) {
     const drag = event.item;
     const dropList = event.container;
@@ -31,5 +42,13 @@ export class AppComponent {
     phContainer.parentElement.insertBefore(phElement, phContainer);
 
     moveItemInArray(this.items, dragIndex, dropIndex);
+  }
+  swapItemsInArrat(arr, firstItem, secondItem): any[] {
+    const firstIndex = arr.findIndex((a) => a === firstItem);
+    const secondIndex = arr.findIndex((a) => a === secondItem);
+    const first = arr[firstIndex];
+    arr[firstIndex] = arr[secondIndex];
+    arr[secondIndex] = first;
+    return arr;
   }
 }

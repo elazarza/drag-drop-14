@@ -7,18 +7,42 @@
 </ul>
 
 <div class="example-container" cdkDropListGroup>
-  <div
-    *ngFor="let item of items; let i = index"
-    cdkDropList
-    [cdkDropListData]="i"
-  >
-    <div
-      cdkDrag
-      [cdkDragData]="i"
-      (cdkDragEntered)="dragEntered($event)"
-      class="example-box"
-    >
-      {{ item }}
-    </div>
-  </div>
+  <ngx-masonry [ordered]="true" [options]="masonryOptions">
+  <div class="grid-sizer"></div>
+    <ng-container *ngFor="let item of items; let i = index">
+      <div
+        *ngIf="item === 4; else other"
+        ngxMasonryItem
+        class="list list-wide grid-item grid-item--fullwidth"
+        cdkDropList
+        [cdkDropListData]="i"
+      >
+        <div
+          cdkDrag
+          [cdkDragData]="i"
+          (cdkDragEntered)="dragEntered($event)"
+          class="example-box"
+        >
+          {{ item }}
+        </div>
+      </div>
+      <ng-template #other>
+        <div
+          ngxMasonryItem
+          class="list list grid-item"
+          cdkDropList
+          [cdkDropListData]="i"
+        >
+          <div
+            cdkDrag
+            [cdkDragData]="i"
+            (cdkDragEntered)="dragEntered($event)"
+            class="example-box"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ngx-masonry>
 </div>
