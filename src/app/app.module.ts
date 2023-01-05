@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
+  imports:      [ BrowserModule, FormsModule,DragDropModule ],
   declarations: [ AppComponent, HelloComponent ],
   bootstrap:    [ AppComponent ]
 })
